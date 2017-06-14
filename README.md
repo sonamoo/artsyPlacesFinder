@@ -9,6 +9,7 @@ This app find 15 Foursquare's recommended places in art category. The default lo
 - JQuery
 - Google map API
 - Foursquare API
+- Font Awesome
 
 ## How to use it
 Clone this repository and then open index.html.
