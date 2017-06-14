@@ -3,6 +3,8 @@ This app find 15 Foursquare's recommended places in art category. The default lo
  any places with help with auto complete powered by google map api and browse any art related places such as museums,
  galleries, and theaters, etc.
 
+ Demo : https://sonamoo.github.io/artsyPlacesFinder/
+
 
 ## Components
 - Knockout.js
