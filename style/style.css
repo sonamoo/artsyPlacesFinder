@@ -1,0 +1,186 @@
+html,
+body {
+    font-family: Arial, sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+input {
+    font-size: 12px;
+}
+
+h1 {
+    color: white;
+    font-size: 22px;
+    margin: 0 0 10px 0;
+    text-align: center;
+}
+
+hr {
+    background: #D0D7D9;
+    height: 1px;
+    margin: 20px 0 20px 0;
+    border: none;
+}
+
+.container {
+    height: 100%;
+    position: relative;
+}
+
+.infobox-div, .infobox-info-div {
+    color: white;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: black;
+    opacity: 0.8;
+    padding: 10px;
+    width: 340px;
+    border-radius: 9px;
+}
+
+.infobox-info-div {
+    overflow: auto;
+    top: 160px;
+    height: 70%;
+}
+
+#map {
+    height: 100%;
+}
+
+#search-location, #filter {
+    display: inline-block;
+    width: 70%;
+    height: 30px;
+    opacity: 1;
+}
+
+#filter {
+    margin-top: 5px;
+}
+
+#find-arts-button, #filter-button {
+    width: 50px;
+    text-align: center;
+    height: 36px;
+    display: inline-block;
+}
+
+.navicon-link-div {
+    vertical-align: text-top;
+    display: inline-block;
+
+}
+
+#navicon-link {
+    padding-left: 5px;
+    padding-top: 30px;
+}
+
+.navicon {
+    vertical-align: text-bottom;
+}
+
+.website-link {
+    color: blue;
+}
+
+.infobox-places-div {
+    min-height: 200px;
+    padding: 0 10px 0 10px;
+}
+
+.infobox-places-div:hover {
+    background-color: navy;
+    opacity: .9;
+}
+
+.featured-photo {
+    float: left;
+    margin-right: 10px;
+}
+
+.infowindow-venue-name {
+    font-size: 16px;
+}
+
+.infowindow-div {
+    width: 300px;
+
+}
+
+.infowindow-img-rating-div {
+    height: 110px;
+}
+
+.infobox-places-divider {
+    margin: 0px;
+}
+
+.infobox-venue-name {
+    margin: 0px;
+    padding: 10px 0 10px 0;
+}
+
+.infobox-tip {
+    margin: 0px;
+}
+
+.infobox-tip-description {
+    margin: 0px;
+    padding: 5px 0 10px 0;
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    .infobox-div, .infobox-info-div {
+        width: 100%;
+        top: 0;
+        left: 0;
+        padding: 0px;
+        border-radius: 0;
+    }
+
+    .infobox-info-div {
+        top: 103px;
+        display: none;
+        height: 80%
+    }
+
+    .infobox-div {
+        padding-top: 10px;
+    }
+
+    .infobox-input-button {
+        padding: 0 10px;
+    }
+
+    #search-location, #filter {
+
+        width: 65%;
+        height: 22px;
+        opacity: 1;
+    }
+
+    #filter {
+        margin-top: 5px;
+    }
+
+    #find-arts-button, #filter-button {
+        width: 50px;
+        text-align: center;
+        height: 28px;
+        display: inline-block;
+    }
+}

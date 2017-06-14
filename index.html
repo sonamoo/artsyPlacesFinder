@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type=text/css href="style/style.css">
+    <link rel="stylesheet" href="style/font-awesome-4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="container">
+    <div id="map"></div>
+    <div class="infobox-div">
+        <h1>Artsy Places Finder</h1>
+        <div class="infobox-input-button">
+            <input data-bind="value: location" id="search-location" type="text" placeholder="Address" autocomplete="on">
+            <button type="button" data-bind="click: getLatLng" id="find-arts-button">Search</button>
+        </div>
+        <div class="infobox-input-button">
+            <input data-bind="textInput: filterKeyword" id="filter" type="text" placeholder="Filter">
+            <button type="button" data-bind="click: artFilter" id="filter-button">Filter</button>
+            <div class="navicon-link-div">
+                <a href="#" id="navicon-link"><i class="fa fa-bars fa-2x navicon" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="infobox-info-div">
+        <p data-bind="text: location"></p>
+        <hr class="infobox-places-divider">
+        <div data-bind="foreach: filteredRecommendedObjects">
+            <a href="#">
+                <div data-bind="click: $parent.createInfoWindowByClicking" class="infobox-places-div">
+                    <h3 data-bind="text: venue.venue.name" class="infobox-venue-name"></h3>
+                    <img data-bind="attr: {src: photoUrl}" class="infobox-photos">
+                    <p class="infobox-tip">tip: </p>
+                    <p data-bind="text: tip" class="infobox-tip-description"></p>
+                </div>
+            </a>
+            <hr class="infobox-places-divider">
+        </div>
+    </div>
+
+</div>
+
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/knockout-3.4.2.js"></script>
+<script
+        src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&v=3&key=AIzaSyD2FONLbXkKpBOiLk_fs5Axh_O-_N8l2sQ">
+</script>
+<script type="text/javascript" src="js/app.js"></script>
+</body>
+</html>
