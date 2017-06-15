@@ -1,6 +1,5 @@
 var viewModel = function() {
     var self = this;
-    var infowindow;
     var markers = [];
     var photosUrls = [];    // contains Foursquare venue photo.
     var recommendedPlacesObjects = [];  // Foursauare recommended objects before filtering.
@@ -164,7 +163,7 @@ var viewModel = function() {
             // Activate this app by creating markers and infowindows.
             activator(LatLngObject);
         }).fail(function(err) {
-            window.alert("Sorry, we could not find any recommended artzy near you :( Please try other location. ")
+            window.alert("Sorry, we could not find any recommended artzy near you :( Please try other location. ");
         });
     }
 
@@ -212,7 +211,7 @@ var viewModel = function() {
             if (venue.rating){
                 rating = venue.rating;
             } else {
-                rating = "not rated"
+                rating = "not rated";
             }
             var featuredPhotoUrl = createPhotoUrl(venueObject, "150x100");
             var addressOfVenue = venue.location.address + ", " + venue.location.city;
@@ -253,13 +252,14 @@ var viewModel = function() {
     function getLatLngFromVenue(venue) {
         // some venue has labeledLatLngs array but some don't.
         // if there are lat and lat inside of location
+        var loc;
         if (venue.location.lat && venue.location.lng) {
-            var loc = {
+            loc = {
                 lat: venue.location.lat,
                 lng: venue.location.lng
             };
         } else {  // if there is labeledLatLngs array inside of location.
-            var loc = {
+            loc = {
                 lat: venue.location.labeledLatLngs[0].lat,
                 lng: venue.location.labeledLatLngs[0].lng
             };
