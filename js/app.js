@@ -1,4 +1,4 @@
-var viewModel = function() {
+var ViewModel = function() {
     var self = this;
     var markers = [];
     var photosUrls = [];    // contains Foursquare venue photo.
@@ -12,32 +12,37 @@ var viewModel = function() {
     var map;
     // Initialize map
 
+
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: initialLatLng.lat, lng: initialLatLng.lng},
         zoom: 13,
         mapTypeControl: false,
         disableDefaultUI: true
     });
+
     // Shows up in the infobox when user input an address.
     self.location = ko.observable();
     self.placeSearchLatLng = ko.observable({
         searched: false
     });
+
     // User input keyword to filter the places.
     self.filterKeyword = ko.observable();
     // This array contains the Foursquare recommended places objects' tip, venue, marker, photoUrl.
     self.recommendedObjectsAndPhotosUrls = ko.observableArray();
     // filtered Foursquare recommended objects.
     self.filteredRecommendedObjects = ko.observableArray();
+    self.input = ko.observable();
 
 
     // This function is activated when an user input new address.
     // it gets latitude and longitude by calling geocoder.
     // Call getGrouponDeals function if lat and lng is found.
     self.getLatLng = function() {
-        var address = document.getElementById('search-location').value;
         var LatLngObject;
-        self.location(address);
+        var address = self.location();
+        console.log("searching places :", address);
+        console.log("observable: ", self.location());
         var geocoder = new google.maps.Geocoder();
         if (address === '') {
             window.alert('You must enter an area, or address.');
@@ -60,10 +65,32 @@ var viewModel = function() {
                 }
             });
         }
-    }; // End of getLatLng function.
+    };
+
+
+    // This function asynchronously filter the recommended places by title.
+    self.filter = function(value) {
+        self.filteredRecommendedObjects([]);
+        for (var i = 0; i < self.recommendedObjectsAndPhotosUrls().length; i++) {
+            console.log("inside of the for loop");
+            title = self.recommendedObjectsAndPhotosUrls()[i].venue.venue.name.toLowerCase();
+            console.log(title.indexOf(self.filterKeyword()));
+            if (title.indexOf(self.filterKeyword()) !== -1) {
+                self.filteredRecommendedObjects.push(self.recommendedObjectsAndPhotosUrls()[i]);
+                markers[i].setMap(map);
+            } else {
+                markers[i].setMap(null);
+            }
+        }
+    };
+
+    self.filterKeyword.subscribe(self.filter);
+
+
 
 
     // Gets activated when user input the filter keyword. This function find the
+    /*
     self.artFilter = function() {
         var keyword = self.filterKeyword();
         var title;
@@ -80,11 +107,11 @@ var viewModel = function() {
                     self.filteredRecommendedObjects.push(self.recommendedObjectsAndPhotosUrls()[i]);
                 } else {
                     markers[i].setMap(null);
-                    console.log("sdsdfsfsdfasdfadfsadfasdf");
                 }
             }
         }
-    }; // End of artFilter function.
+    };
+    */
 
 
     // Gets activated when user clicks on the recommended places on the infobox.
@@ -283,9 +310,6 @@ var viewModel = function() {
         map.setCenter(loc);
     }
 
-    // auto complete
-    var input = document.getElementById('search-location');
-    var autoComplete = new google.maps.places.Autocomplete(input);
 
     // when user clicks the hamburger bar it shows and hides the infobox.
     $(document).ready(function(){
@@ -293,6 +317,16 @@ var viewModel = function() {
             $(".infobox-info-div").slideToggle("fast");
         });
     });
+
+
+    // auto complete
+    var input = document.getElementById('search-location');
+
+    var autoComplete = new google.maps.places.Autocomplete(input);
+
 };
 
-ko.applyBindings(new viewModel());
+
+function googleMapCallBack() {
+    ko.applyBindings(new ViewModel());
+}
