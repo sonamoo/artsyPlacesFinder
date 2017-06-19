@@ -20,6 +20,7 @@ var ViewModel = function() {
         disableDefaultUI: true
     });
 
+
     // Shows up in the infobox when user input an address.
     self.location = ko.observable();
     self.placeSearchLatLng = ko.observable({
@@ -33,6 +34,11 @@ var ViewModel = function() {
     // filtered Foursquare recommended objects.
     self.filteredRecommendedObjects = ko.observableArray();
     self.input = ko.observable();
+    // when user clicks the hamburger bar it shows and hides the infobox.
+    self.infoboxVisibility = ko.observable(true);
+    self.toggleInfobox = function () {
+        self.infoboxVisibility(!self.infoboxVisibility());
+    };
 
 
     // This function is activated when an user input new address.
@@ -83,45 +89,7 @@ var ViewModel = function() {
             }
         }
     };
-
     self.filterKeyword.subscribe(self.filter);
-
-
-
-
-    // Gets activated when user input the filter keyword. This function find the
-    /*
-    self.artFilter = function() {
-        var keyword = self.filterKeyword();
-        var title;
-        if (keyword === undefined) {
-            window.alert('You must enter an keyword.');
-        } else {
-            keyword = keyword.toLowerCase();
-            self.filteredRecommendedObjects([]);
-            for (var i = 0; i < self.recommendedObjectsAndPhotosUrls().length; i++) {
-                console.log("inside of the for loop");
-                title = self.recommendedObjectsAndPhotosUrls()[i].venue.venue.name.toLowerCase();
-                console.log(title.indexOf(keyword));
-                if (title.indexOf(keyword) !== -1) {
-                    self.filteredRecommendedObjects.push(self.recommendedObjectsAndPhotosUrls()[i]);
-                } else {
-                    markers[i].setMap(null);
-                }
-            }
-        }
-    };
-    */
-
-
-    // Gets activated when user clicks on the recommended places on the infobox.
-    // Takes filteredRecommendedObjects and creates a given marker's window.
-    self.createInfoWindowByClicking = function(data) {
-        var loc;
-        loc = getLatLngFromVenue(data.venue.venue);
-        setMapToAdjustedCenter(loc);
-        createInfoWindow(data.marker, data.venue);
-    };
 
 
     // this function call contains ajax request. After getting response it calls activator function.
@@ -140,6 +108,12 @@ var ViewModel = function() {
         for (var i=0; i<recommendedPlacesObjects.length; i++) {
             createMarker(recommendedPlacesObjects[i], i, bounds);
             map.fitBounds(bounds);
+
+            // Blow statement resize the map so that markers are always showing on the map.
+            google.maps.event.addDomListener(window, 'resize', function() {
+                map.fitBounds(bounds);
+            });
+
             // create a photo url and push to the photosUrls array
             var photoUrl = createPhotoUrl(recommendedPlacesObjects[i], "140x90");
             photosUrls.push(photoUrl);
@@ -159,6 +133,7 @@ var ViewModel = function() {
             self.filteredRecommendedObjects.push(self.recommendedObjectsAndPhotosUrls()[i]);
         }
     }
+
 
     // Take in LatLngObject and get recommended places from Foursquare.
     function getPlacesFromFourSquare(LatLngObject) {
@@ -209,14 +184,25 @@ var ViewModel = function() {
             map: map,
             id: index
         });
-
         // when user clicks the marker sets the map to the adjusted center and creates an window.
         marker.addListener('click', function() {
+            bounceMarker(marker);
             setMapToAdjustedCenter(loc);
             createInfoWindow(this, venueObject);
+
         });
         bounds.extend(loc);
         markers.push(marker);
+    }
+
+
+    function bounceMarker(marker) {
+        for (var i=0; i < markers.length; i++) {
+            markers[i].setAnimation(null);
+        }
+        // Make the clicked marker bounce!
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+
     }
 
 
@@ -261,6 +247,18 @@ var ViewModel = function() {
     }
 
 
+    // Gets activated when user clicks on the recommended places on the infobox.
+    // Takes filteredRecommendedObjects and creates a given marker's window.
+    // It also bounces the marker.
+    self.createInfoWindowByClicking = function(data) {
+        var loc;
+        loc = getLatLngFromVenue(data.venue.venue);
+        setMapToAdjustedCenter(loc);
+        createInfoWindow(data.marker, data.venue);
+        bounceMarker(data.marker);
+    };
+
+
     // Takes the venuObject and the size in string and return the photo url.
     function createPhotoUrl(venueObject, size) {
         var venue = venueObject.venue;
@@ -303,6 +301,7 @@ var ViewModel = function() {
          markers = [];
     }
 
+
     // set the map with adjusted center.
     function setMapToAdjustedCenter(loc) {
         loc.lat = loc.lat+0.003;
@@ -311,19 +310,9 @@ var ViewModel = function() {
     }
 
 
-    // when user clicks the hamburger bar it shows and hides the infobox.
-    $(document).ready(function(){
-        $("#navicon-link").click(function(){
-            $(".infobox-info-div").slideToggle("fast");
-        });
-    });
-
-
     // auto complete
     var input = document.getElementById('search-location');
-
     var autoComplete = new google.maps.places.Autocomplete(input);
-
 };
 
 

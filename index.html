@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type=text/css href="style/style.css">
     <link rel="stylesheet" href="style/font-awesome-4.7.0/css/font-awesome.min.css">
+    <title>Artsy Places Finder</title>
 </head>
 <body>
 <div class="container">
@@ -23,14 +23,15 @@
                 <button type="button" data-bind="click: artFilter" id="filter-button">Filter</button>
                 -->
                 <div class="navicon-link-div">
-                    <a href="#" id="navicon-link"><i class="fa fa-bars fa-2x navicon" aria-hidden="true"></i></a>
+                    <a data-bind="click: toggleInfobox" href="#" id="navicon-link"><i class="fa fa-bars fa-2x navicon" aria-hidden="true"></i></a>
                 </div>
             </div>
         </div>
     </aside>
     <section>
-        <div class="infobox-info-div">
-            <p data-bind="text: location"></p>
+        <div class="infobox-info-div" data-bind="visible: infoboxVisibility">
+            <p>Search Result From:</p>
+            <p><span data-bind="text: location"></span></p>
             <hr class="infobox-places-divider">
             <div data-bind="foreach: filteredRecommendedObjects">
                 <a href="#">
