@@ -9,6 +9,7 @@ var ViewModel = function() {
         lng: -87.62979819
     };
     var infowindow = new google.maps.InfoWindow();
+    var bounds = new google.maps.LatLngBounds();
     var map;
     // Initialize map
 
@@ -20,6 +21,10 @@ var ViewModel = function() {
         disableDefaultUI: true
     });
 
+    // Blow statement resize the map so that markers are always showing on the map.
+    google.maps.event.addDomListener(window, 'resize', function() {
+        map.fitBounds(bounds);
+    });
 
     // Shows up in the infobox when user input an address.
     self.location = ko.observable();
@@ -95,10 +100,11 @@ var ViewModel = function() {
     // this function call contains ajax request. After getting response it calls activator function.
     getPlacesFromFourSquare(initialLatLng);
 
+
     // This function loop through the foursquare recommended places objects and create
     // markers, infowindows, and an observable array that contains featured photos' urls.
     function activator() {
-        var bounds = new google.maps.LatLngBounds();
+
         var tip;
         // empty the arrays first.
         photosUrls = [];
@@ -109,10 +115,6 @@ var ViewModel = function() {
             createMarker(recommendedPlacesObjects[i], i, bounds);
             map.fitBounds(bounds);
 
-            // Blow statement resize the map so that markers are always showing on the map.
-            google.maps.event.addDomListener(window, 'resize', function() {
-                map.fitBounds(bounds);
-            });
 
             // create a photo url and push to the photosUrls array
             var photoUrl = createPhotoUrl(recommendedPlacesObjects[i], "140x90");
@@ -133,6 +135,9 @@ var ViewModel = function() {
             self.filteredRecommendedObjects.push(self.recommendedObjectsAndPhotosUrls()[i]);
         }
     }
+
+
+
 
 
     // Take in LatLngObject and get recommended places from Foursquare.
