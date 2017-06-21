@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type=text/css href="style/style.css">
+    <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/font-awesome-4.7.0/css/font-awesome.min.css">
     <title>Artsy Places Finder</title>
 </head>
@@ -47,11 +47,11 @@
         </div>
     </section>
 </div>
-<script type="text/javascript" src="js/app.js"></script>
+<script src="js/app.js"></script>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="js/knockout-3.4.2.js"></script>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&v=3&key=AIzaSyD2FONLbXkKpBOiLk_fs5Axh_O-_N8l2sQ&callback=googleMapCallBack">
+<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&v=3&key=AIzaSyD2FONLbXkKpBOiLk_fs5Axh_O-_N8l2sQ&callback=googleMapCallBack"
+        async defer onerror="mapError()">
 </script>
 
 </body>

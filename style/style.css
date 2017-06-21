@@ -23,7 +23,7 @@ h1 {
 }
 
 hr {
-    background: #D0D7D9;
+    background: #d0d7d9;
     height: 1px;
     margin: 20px 0 20px 0;
     border: none;
@@ -34,7 +34,8 @@ hr {
     position: relative;
 }
 
-.infobox-div, .infobox-info-div {
+.infobox-div,
+.infobox-info-div {
     color: white;
     position: absolute;
     top: 10px;
@@ -67,7 +68,8 @@ hr {
     margin-top: 5px;
 }
 
-#find-arts-button, #filter-button {
+#find-arts-button,
+#filter-button {
     width: 50px;
     text-align: center;
     height: 36px;
@@ -144,7 +146,8 @@ hr {
         font-size: 20px;
     }
 
-    .infobox-div, .infobox-info-div {
+    .infobox-div,
+    .infobox-info-div {
         width: 100%;
         top: 0;
         left: 0;
@@ -165,7 +168,8 @@ hr {
         padding: 0 10px;
     }
 
-    #search-location, #filter {
+    #search-location,
+    #filter {
 
         width: 65%;
         height: 22px;
@@ -176,7 +180,8 @@ hr {
         margin-top: 5px;
     }
 
-    #find-arts-button, #filter-button {
+    #find-arts-button,
+    #filter-button {
         width: 50px;
         text-align: center;
         height: 28px;

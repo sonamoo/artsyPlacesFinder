@@ -324,3 +324,7 @@ var ViewModel = function() {
 function googleMapCallBack() {
     ko.applyBindings(new ViewModel());
 }
+
+function mapError() {
+    window.alert('Failed to load Google Map.');
+}
