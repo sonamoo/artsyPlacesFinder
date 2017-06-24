@@ -13,17 +13,11 @@ var ViewModel = function() {
     var map;
     // Initialize map
 
-
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: initialLatLng.lat, lng: initialLatLng.lng},
         zoom: 13,
         mapTypeControl: false,
         disableDefaultUI: true
-    });
-
-    // Blow statement resize the map so that markers are always showing on the map.
-    google.maps.event.addDomListener(window, 'resize', function() {
-        map.fitBounds(bounds);
     });
 
     // Shows up in the infobox when user input an address.
@@ -48,12 +42,11 @@ var ViewModel = function() {
 
     // This function is activated when an user input new address.
     // it gets latitude and longitude by calling geocoder.
-    // Call getGrouponDeals function if lat and lng is found.
     self.getLatLng = function() {
         var LatLngObject;
-        var address = self.location();
-        console.log("searching places :", address);
-        console.log("observable: ", self.location());
+        var address = document.getElementById('search-location').value;
+        self.location = ko.observable(address);
+        console.log(address);
         var geocoder = new google.maps.Geocoder();
         if (address === '') {
             window.alert('You must enter an area, or address.');
@@ -67,8 +60,8 @@ var ViewModel = function() {
                         searched: true
                     });
                     LatLngObject = self.placeSearchLatLng();
-                    map.setCenter(results[0].geometry.location);
-                    map.setZoom(13);
+//                    map.setCenter(results[0].geometry.location);
+//                    map.setZoom(13);
                     getPlacesFromFourSquare(LatLngObject);
                 } else {
                     window.alert('We could not find that location - try entering a more' +
@@ -104,7 +97,6 @@ var ViewModel = function() {
     // This function loop through the foursquare recommended places objects and create
     // markers, infowindows, and an observable array that contains featured photos' urls.
     function activator() {
-
         var tip;
         // empty the arrays first.
         photosUrls = [];
@@ -113,8 +105,6 @@ var ViewModel = function() {
         self.filteredRecommendedObjects([]);
         for (var i=0; i<recommendedPlacesObjects.length; i++) {
             createMarker(recommendedPlacesObjects[i], i, bounds);
-            map.fitBounds(bounds);
-
 
             // create a photo url and push to the photosUrls array
             var photoUrl = createPhotoUrl(recommendedPlacesObjects[i], "140x90");
@@ -131,13 +121,10 @@ var ViewModel = function() {
                 photoUrl: photosUrls[i],
                 marker: markers[i]
             });
-
             self.filteredRecommendedObjects.push(self.recommendedObjectsAndPhotosUrls()[i]);
         }
+        map.fitBounds(bounds);
     }
-
-
-
 
 
     // Take in LatLngObject and get recommended places from Foursquare.
@@ -168,9 +155,9 @@ var ViewModel = function() {
             // save the items objects to the observableArray.
             recommendedPlacesObjects = result.response.groups[0].items;
             // Activate this app by creating markers and infowindows.
-            activator(LatLngObject);
+            activator();
         }).fail(function(err) {
-            window.alert("Sorry, we could not find any recommended artzy near you :( Please try other location. ");
+            window.alert("Sorry, we could not find any recommended artsy near you :( Please try other location. ");
         });
     }
 
@@ -311,7 +298,7 @@ var ViewModel = function() {
     function setMapToAdjustedCenter(loc) {
         loc.lat = loc.lat+0.003;
         loc.lng = loc.lng-0.003;
-        map.setCenter(loc);
+//        map.setCenter(loc);
     }
 
 
