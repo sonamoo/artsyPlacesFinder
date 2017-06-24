@@ -9,7 +9,6 @@ var ViewModel = function() {
         lng: -87.62979819
     };
     var infowindow = new google.maps.InfoWindow();
-    var bounds = new google.maps.LatLngBounds();
     var map;
     // Initialize map
 
@@ -39,13 +38,15 @@ var ViewModel = function() {
         self.infoboxVisibility(!self.infoboxVisibility());
     };
 
-
+    // this function call contains ajax request. After getting response it calls activator function.
+    getPlacesFromFourSquare(initialLatLng);
+    
     // This function is activated when an user input new address.
     // it gets latitude and longitude by calling geocoder.
     self.getLatLng = function() {
         var LatLngObject;
         var address = document.getElementById('search-location').value;
-        self.location = ko.observable(address);
+        self.location(address);
         console.log(address);
         var geocoder = new google.maps.Geocoder();
         if (address === '') {
@@ -60,8 +61,8 @@ var ViewModel = function() {
                         searched: true
                     });
                     LatLngObject = self.placeSearchLatLng();
-//                    map.setCenter(results[0].geometry.location);
-//                    map.setZoom(13);
+                    map.setCenter(results[0].geometry.location);
+                    map.setZoom(13);
                     getPlacesFromFourSquare(LatLngObject);
                 } else {
                     window.alert('We could not find that location - try entering a more' +
@@ -90,13 +91,10 @@ var ViewModel = function() {
     self.filterKeyword.subscribe(self.filter);
 
 
-    // this function call contains ajax request. After getting response it calls activator function.
-    getPlacesFromFourSquare(initialLatLng);
-
-
     // This function loop through the foursquare recommended places objects and create
     // markers, infowindows, and an observable array that contains featured photos' urls.
     function activator() {
+        var bounds = new google.maps.LatLngBounds();
         var tip;
         // empty the arrays first.
         photosUrls = [];
@@ -181,7 +179,6 @@ var ViewModel = function() {
             bounceMarker(marker);
             setMapToAdjustedCenter(loc);
             createInfoWindow(this, venueObject);
-
         });
         bounds.extend(loc);
         markers.push(marker);
@@ -290,7 +287,7 @@ var ViewModel = function() {
         for (var i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
         }
-         markers = [];
+        markers = [];
     }
 
 
@@ -298,7 +295,7 @@ var ViewModel = function() {
     function setMapToAdjustedCenter(loc) {
         loc.lat = loc.lat+0.003;
         loc.lng = loc.lng-0.003;
-//        map.setCenter(loc);
+        map.setCenter(loc);
     }
 
 
