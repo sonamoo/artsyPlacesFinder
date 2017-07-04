@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="style/font-awesome-4.7.0/css/font-awesome.min.css">
     <title>Artsy Places Finder</title>
 </head>
 <body>
-<div class="container">
+<div class="container-fluid main">
     <div id="map"></div>
     <aside>
         <div class="infobox-div">
             <h1>Artsy Places Finder</h1>
             <div class="infobox-input-button">
                 <input id="search-location" type="text" placeholder="Address" autocomplete="on">
-                <button type="button" data-bind="click: getLatLng" id="find-arts-button">Search</button>
+                <button type="button" class="btn btn-default" data-bind="click: getLatLng" id="find-arts-button">Search</button>
             </div>
             <div class="infobox-input-button">
                 <input data-bind="textInput: filterKeyword" id="filter" type="text" placeholder="Filter">
@@ -23,7 +23,7 @@
                 <button type="button" data-bind="click: artFilter" id="filter-button">Filter</button>
                 -->
                 <div class="navicon-link-div">
-                    <a data-bind="click: toggleInfobox" href="#" id="navicon-link"><i class="fa fa-bars fa-2x navicon" aria-hidden="true"></i></a>
+                    <a data-bind="click: toggleInfobox" href="#" id="navicon-link"><span class="glyphicon glyphicon-align-justify"></span></a>
                 </div>
             </div>
         </div>

@@ -40,7 +40,7 @@ var ViewModel = function() {
 
     // this function call contains ajax request. After getting response it calls activator function.
     getPlacesFromFourSquare(initialLatLng);
-    
+
     // This function is activated when an user input new address.
     // it gets latitude and longitude by calling geocoder.
     self.getLatLng = function() {
